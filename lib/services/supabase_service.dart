@@ -89,8 +89,11 @@ class SupabaseService {
 
   /// Alle Märkte für die Karte (nur mit Koordinaten)
   Future<List<FleaMarket>> getMarketsForMap({String? dateFrom}) async {
+    final now = DateTime.now();
+    final todayStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
     final params = <String, String>{
       'select': 'id,title,lat,lng,date,city,plz,street,category,date_end',
+      'date': 'gte.$todayStr',
       'lat': 'not.is.null',
       'order': 'date.asc',
       'limit': '500',
